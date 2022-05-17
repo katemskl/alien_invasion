@@ -1,4 +1,4 @@
-class Settings():
+class Settings:
     """КЛАС ДЛЯ ХРАНЕНИЯ ВСЕХ НАСТРОЕК ИГРЫ Alien Invasion"""
 
     def __init__(self):
