@@ -8,6 +8,7 @@ class Ship:
 
         # Загрузка изображения корабля и получние прямоугольника
         self.image = pygame.image.load('images/ship2.bmp')
+        self.image = pygame.transform.scale(self.image, (50, 87))
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
         # Каждый новый корабль появляэться у нижнего края экрана
