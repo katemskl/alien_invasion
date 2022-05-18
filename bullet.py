@@ -2,6 +2,7 @@ import pygame
 
 from pygame.sprite import Sprite
 
+
 class Bullet(Sprite):
     """Класс для управления пулями, выпущенных кораблем"""
 
@@ -13,7 +14,7 @@ class Bullet(Sprite):
 
         # Создание пули в позиции (0, 0) и назначение правильнойй позиции
         self.rect = pygame.Rect(0, 0, ai_settings.bullet_width, ai_settings.bullet_height)
-        self.rect.centerx = ship.rect.centrx
+        self.rect.centerx = ship.rect.centerx
         self.rect.top = ship.rect.top
 
         # Позиция пули храниться в вещественном формате
@@ -33,5 +34,4 @@ class Bullet(Sprite):
         """Вывод пули на экран"""
 
         pygame.draw.rect(self.screen, self.color, self.rect)
-
 
