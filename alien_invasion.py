@@ -8,6 +8,8 @@ import game_functions as gf
 
 from pygame.sprite import Group
 
+from alien import Alien
+
 
 def run_game():
     # Инициализирует pygame, settings и объект экрана
