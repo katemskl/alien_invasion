@@ -4,6 +4,8 @@ import pygame
 
 from bullet import Bullet
 
+from alien import Alien
+
 
 def update_bullets(bullets):
     """Обновляет позиции пуль и уничтожает старые пули"""
@@ -55,7 +57,26 @@ def check_events(ai_settings, screen, ship, bullets):
             check_keyup_events(event, ship)
 
 
-def update_screen(ai_settings, screen, ship, bullets):
+def create_fleet(ai_settings, screen, aliens):
+    """Создает флот пришельцев"""
+    # Создание пришельца и вычесление количества пришельцев в ряду
+    # Интервал между соседними пришельцами равен одной ширине пришельца
+
+    alien = Alien(ai_settings, screen)
+    alien_width = alien.rect.width
+    available_space_x = ai_settings.screen_width - 2 * alien_width
+    number_aliens_x = int(available_space_x / (2 * alien_width))
+
+    # Создание первого ряда пришельцев
+    for alien_number in range(number_aliens_x):
+        # Создание пришельца и размищение его в ряду
+        alien = Alien(ai_settings, screen)
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
+        aliens.add(alien)
+
+
+def update_screen(ai_settings, screen, ship, aliens, bullets):
     """Обновляет изображение на экране и отображает новый экран"""
     # При каждом проходе цикла перерисовывается экран
     screen.fill(ai_settings.bg_color)
@@ -63,6 +84,7 @@ def update_screen(ai_settings, screen, ship, bullets):
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     ship.blitme()
+    aliens.draw(screen)
 
     # Отоброжение последнего прорисованного экрана
     pygame.display.flip()
