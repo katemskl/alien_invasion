@@ -7,7 +7,7 @@ from bullet import Bullet
 from alien import Alien
 
 
-def update_bullets(aliens, bullets):
+def update_bullets(ai_settings, screen, ship, aliens, bullets):
     """Обновляет позиции пуль и уничтожает старые пули"""
     # Обновляет позиции пуль
     bullets.update()
@@ -15,10 +15,19 @@ def update_bullets(aliens, bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom < 0:
             bullets.remove(bullet)
-    # Проверка попаданий прешельцев
-    # При обнаружении попадания удалить пулю и пришельца
+        # print(len(bullets))
+    check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets)
+
+
+def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
+    """Обработка коллизий пуль с пришельцами"""
+    # Удаление пуль и пришельцев, участвующих в коллизиях
     collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    # print(len(bullets))
+    if len(aliens) == 0:
+        # Уничтожает существующих пуль и создание нового флота
+        bullets.empty()
+        create_fleet(ai_settings, screen, ship, aliens)
+
 
 
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
