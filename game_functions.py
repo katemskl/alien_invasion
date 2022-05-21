@@ -7,7 +7,7 @@ from bullet import Bullet
 from alien import Alien
 
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets):
     """Обновляет позиции пуль и уничтожает старые пули"""
     # Обновляет позиции пуль
     bullets.update()
@@ -15,6 +15,9 @@ def update_bullets(bullets):
     for bullet in bullets.copy():
         if bullet.rect.bottom < 0:
             bullets.remove(bullet)
+    # Проверка попаданий прешельцев
+    # При обнаружении попадания удалить пулю и пришельца
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
     # print(len(bullets))
 
 
