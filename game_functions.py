@@ -96,6 +96,11 @@ def create_fleet(ai_settings, screen, ship, aliens):
             create_alien(ai_settings, screen, aliens, alien_number, row_number)
 
 
+def update_aliens(aliens):
+    """Обновляет позиции всех пришельцев во флоте"""
+    aliens.update()
+
+
 def update_screen(ai_settings, screen, ship, aliens, bullets):
     """Обновляет изображение на экране и отображает новый экран"""
     # При каждом проходе цикла перерисовывается экран
