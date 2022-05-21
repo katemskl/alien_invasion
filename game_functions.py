@@ -29,7 +29,6 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
         create_fleet(ai_settings, screen, ship, aliens)
 
 
-
 def check_keydown_events(event, ai_settings, screen, ship, bullets):
     """ Реагирует на нажатие клавиш"""
     if event.key == pygame.K_RIGHT:
@@ -123,10 +122,13 @@ def change_fleet_direction(ai_settings, aliens):
     ai_settings.fleet_direction *= -1
 
 
-def update_aliens(ai_settings, aliens):
+def update_aliens(ai_settings, ship, aliens):
     """Проверяет, достиг ли флот края экрана, после чего обновляет позиции всех пришельцев во флоте"""
     check_fleet_edges(ai_settings, aliens)
     aliens.update()
+    # Проверка коллизий "пришелец - корабль"
+    if pygame.sprite.spritecollideany(ship, aliens):
+        print('Ship hit!!!')
 
 
 def update_screen(ai_settings, screen, ship, aliens, bullets):
