@@ -31,7 +31,7 @@ def check_bullet_alien_collisions(ai_settings, screen, ship, aliens, bullets):
         create_fleet(ai_settings, screen, ship, aliens)
 
 
-def check_keydown_events(event, ai_settings, screen, ship, bullets):
+def check_keydown_events(event, ai_settings, screen, stats, play_button, ship, aliens, bullets):
     """ Реагирует на нажатие клавиш"""
     if event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -39,6 +39,8 @@ def check_keydown_events(event, ai_settings, screen, ship, bullets):
         ship.moving_left = True
     elif event.key == pygame.K_SPACE:
         fire_bullet(ai_settings, screen, ship, bullets)
+    elif event.key == pygame.K_p:
+        check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, pushed_p=True)
 
 
 def fire_bullet(ai_settings, screen, ship, bullets):
@@ -65,7 +67,7 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            check_keydown_events(event, ai_settings, screen, ship, bullets)
+            check_keydown_events(event, ai_settings, screen, stats, play_button, ship, aliens, bullets)
         elif event.type == pygame.KEYUP:
             check_keyup_events(event, ship)
         elif event.type == pygame.MOUSEBUTTONDOWN:
@@ -73,10 +75,17 @@ def check_events(ai_settings, screen, stats, play_button, ship, aliens, bullets)
             check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y)
 
 
-def check_play_button(ai_settings, screen, stats, play_button, ship, aliens, bullets, mouse_x, mouse_y):
-    """Запускает новую игру при нажатии кнопки Play"""
+def check_mouse_position(play_button, stats, mouse_x, mouse_y):
+    """Проверяет находиться ли мышь в зоне действия кнопки"""
     button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
     if button_clicked and not stats.game_active:
+        return True
+
+
+def check_play_button(ai_settings, screen, stats, play_button, ship, aliens,
+                      bullets, mouse_x=0, mouse_y=0, pushed_p=False):
+    """Запускает новую игру при нажатии кнопки Play"""
+    if check_mouse_position(play_button, stats, mouse_x, mouse_y) or pushed_p:
         # Указатель мыши скрывается
         pygame.mouse.set_visible(False)
         # Сброс игровой статистики
