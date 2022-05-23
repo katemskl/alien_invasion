@@ -9,6 +9,11 @@ from bullet import Bullet
 from alien import Alien
 
 
+def save_high_score(score):
+    with open('high_score.txt', 'w') as file_h_s:
+        file_h_s.write(str(score))
+
+
 def update_bullets(ai_settings, screen, stats, sb, ship, aliens, bullets):
     """Обновляет позиции пуль и уничтожает старые пули"""
     # Обновляет позиции пуль
@@ -55,9 +60,9 @@ def check_high_score(stats, sb):
 
 def check_keydown_events(event, ai_settings, screen, stats, sb, play_button, ship, aliens, bullets):
     """ Реагирует на нажатие клавиш"""
-    if event.key == pygame.K_ESCAPE:
-        sys.exit()
-    elif event.key == pygame.K_q:
+    if event.key == pygame.K_ESCAPE or event.key == pygame.K_q:
+        score = stats.high_score
+        save_high_score(score)
         sys.exit()
     elif event.key == pygame.K_RIGHT:
         ship.moving_right = True
@@ -91,6 +96,8 @@ def check_events(ai_settings, screen, stats, sb, play_button, ship, aliens, bull
     """Обрабатывает нажатия клавиш и события мыши"""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            score = stats.high_score
+            save_high_score(score)
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             check_keydown_events(event, ai_settings, screen, stats, sb,  play_button, ship, aliens, bullets)
@@ -208,6 +215,8 @@ def ship_hit(ai_settings, stats, sb, screen, ship, aliens, bullets):
         # Пауза
         sleep(0.5)
     else:
+        score = stats.high_score
+        save_high_score(score)
         stats.game_active = False
         pygame.mouse.set_visible(True)
 
