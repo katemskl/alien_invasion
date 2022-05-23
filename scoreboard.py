@@ -19,6 +19,10 @@ class Scoreboard:
         self.font = pygame.font.SysFont(None, 48)
 
         # Подготовка исходного изображения
+        self.prep_all()
+
+    def prep_all(self):
+        """Подготавливает все обьекты Scoreboard"""
         self.prep_score()
         self.prep_high_score()
         self.prep_level()
